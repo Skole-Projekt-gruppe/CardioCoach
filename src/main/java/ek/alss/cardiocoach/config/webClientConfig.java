@@ -1,5 +1,6 @@
 package ek.alss.cardiocoach.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -15,8 +16,26 @@ public class webClientConfig {
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
     }
 
+    // Til Data
     @Bean
-    public WebClient stravaClient(WebClient.Builder builder) {
-        return builder.clone().baseUrl("https://www.strava.com/api/v3").build();
+    WebClient stravaWebClient(
+            WebClient.Builder b,
+            @Value("${strava.api.baseUrl}") String baseUrl
+    ) {
+        return b.clone()
+                .baseUrl(baseUrl)
+                .build();
+    }
+
+
+    // Til token refresh
+    @Bean
+    WebClient stravaAuthWebClient(
+            WebClient.Builder b,
+            @Value("${strava.api.authUrl}") String authUrl
+    ) {
+        return b.clone()
+                .baseUrl(authUrl)
+                .build();
     }
 }
