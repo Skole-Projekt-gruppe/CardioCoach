@@ -2,6 +2,7 @@ package ek.alss.cardiocoach.client;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -32,9 +33,12 @@ public class StravaClient {
         this.stravaAuthWebClient = stravaAuthWebClient;
     }
 
-    private record RefreshRequest(String client_id, String client_secret, String grant_type, String refresh_token) {}
+    private record RefreshRequest(String client_id, String client_secret, String grant_type, String refresh_token) {
+    }
 
-    private record RefreshResponse(String token_type, String access_token, String expires_at, String expires_in, String refresh_token) {}
+    private record RefreshResponse(String token_type, String access_token, long expires_at, long expires_in,
+                                   String refresh_token) {
+    }
 
     public Mono<String> refreshToken() {
         return stravaAuthWebClient.post()
@@ -45,9 +49,16 @@ public class StravaClient {
                 .map(response -> {
                             this.accessToken = response.access_token;
                             this.refreshToken = response.refresh_token;
-                            return accessToken + "n/" + response.access_token;
+                            return accessToken;
                         }
                 );
     }
 
+    public Mono<String> getActivites() {
+        return stravaWebClient.get()
+                .uri("/athlete/activities?per_page=30&page=1")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 }
