@@ -8,41 +8,34 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class webClientConfig
-{
+public class webClientConfig {
 
     @Bean
-    public WebClient.Builder webClientBuilder()
-    {
+    public WebClient.Builder webClientBuilder() {
         return WebClient.builder()
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
     }
 
+    // Til Data
     @Bean
-    public WebClient stravaClient(WebClient.Builder builder)
-    {
-        return builder.clone().baseUrl("https://www.strava.com/api/v3").build();
-    }
-
-    @Bean
-    WebClient chatGptWebClient(
+    WebClient stravaWebClient(
             WebClient.Builder b,
-            @Value("OPENAI_API_KEY") String apiKey,
-            @Value("https://api.openai.com/v1") String baseUrl
-    )
-    {
-        if (apiKey == null || apiKey.isBlank())
-        {
-            throw new IllegalArgumentException("API-key must be provided");
-        }
-        if (baseUrl == null || baseUrl.isBlank())
-        {
-            throw new IllegalArgumentException("ChatGpt API base URL must be provided in properties");
-        }
-
+            @Value("${strava.api.baseUrl}") String baseUrl
+    ) {
         return b.clone()
                 .baseUrl(baseUrl)
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .build();
+    }
+
+
+    // Til token refresh
+    @Bean
+    WebClient stravaAuthWebClient(
+            WebClient.Builder b,
+            @Value("${strava.api.authUrl}") String authUrl
+    ) {
+        return b.clone()
+                .baseUrl(authUrl)
                 .build();
     }
 }

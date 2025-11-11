@@ -1,19 +1,53 @@
 package ek.alss.cardiocoach.client;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 public class StravaClient {
 
-    private final WebClient stravaClient;
+    private final WebClient stravaWebClient;
+    private final WebClient stravaAuthWebClient;
+
+    @Value("${strava.client-id}")
+    private String clientId;
+
+    @Value("${strava.client-secret}")
+    private String clientSecret;
+
+    @Value("${strava.access-token}")
+    private String accessToken;
+
+    @Value("${strava.refresh-token}")
+    private String refreshToken;
 
     public StravaClient(
-            @Qualifier("stravaClient") WebClient stravaClient
+            @Qualifier("stravaWebClient") WebClient stravaWebClient,
+            @Qualifier("stravaAuthWebClient") WebClient stravaAuthWebClient
     ) {
-        this.stravaClient = stravaClient;
+        this.stravaWebClient = stravaWebClient;
+        this.stravaAuthWebClient = stravaAuthWebClient;
     }
 
+    private record RefreshRequest(String client_id, String client_secret, String grant_type, String refresh_token) {}
+
+    private record RefreshResponse(String token_type, String access_token, String expires_at, String expires_in, String refresh_token) {}
+
+    public Mono<String> refreshToken() {
+        return stravaAuthWebClient.post()
+                .uri("/oauth/token")
+                .bodyValue(new RefreshRequest(clientId, clientSecret, "refresh_token", refreshToken))
+                .retrieve()
+                .bodyToMono(RefreshResponse.class)
+                .map(response -> {
+                            this.accessToken = response.access_token;
+                            this.refreshToken = response.refresh_token;
+                            return accessToken + "n/" + response.access_token;
+                        }
+                );
+    }
 
 }
