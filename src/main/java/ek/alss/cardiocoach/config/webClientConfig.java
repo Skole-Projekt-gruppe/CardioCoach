@@ -43,8 +43,8 @@ public class webClientConfig {
     @Bean
     public WebClient chatGptWebClient(
             WebClient.Builder b,
-            @Value("${OPENAI_API_KEY}") String apiKey,
-            @Value("${OPENAI_BASE_URL:https://api.openai.com/v1}") String baseUrl
+            @Value("${chatgpt.api.key}") String apiKey,
+            @Value("${chatgpt.api.baseUrl}") String baseUrl
     ) {
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalArgumentException("API-key must be provided");
@@ -60,8 +60,3 @@ public class webClientConfig {
                 .build();
     }
 }
-
-
-
-
-
