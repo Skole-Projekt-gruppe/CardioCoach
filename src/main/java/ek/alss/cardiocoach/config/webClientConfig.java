@@ -38,4 +38,30 @@ public class webClientConfig {
                 .baseUrl(authUrl)
                 .build();
     }
+
+    // OpenAI (ChatGPT)
+    @Bean
+    public WebClient chatGptWebClient(
+            WebClient.Builder b,
+            @Value("${OPENAI_API_KEY}") String apiKey,
+            @Value("${OPENAI_BASE_URL:https://api.openai.com/v1}") String baseUrl
+    ) {
+        if (apiKey == null || apiKey.isBlank()) {
+            throw new IllegalArgumentException("API-key must be provided");
+        }
+        if (baseUrl == null || baseUrl.isBlank()) {
+            throw new IllegalArgumentException("ChatGPT API base URL must be provided");
+        }
+
+        return b.clone()
+                .baseUrl(baseUrl)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
+                .build();
+    }
 }
+
+
+
+
+
