@@ -1,5 +1,5 @@
 import {handleChatSubmit, handleKeyDown} from "./formSubmit.js";
-
+import {getActivities} from "./apiService.js";
 
 window.addEventListener("DOMContentLoaded", initApp);
 

@@ -1,4 +1,4 @@
-import askAI from "./apiService.js";
+import {askAI} from "./apiService.js";
 
 export async function handleChatSubmit(event) {
     event.preventDefault();
