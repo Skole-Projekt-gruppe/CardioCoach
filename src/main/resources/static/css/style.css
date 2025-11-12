@@ -1,147 +1,175 @@
+/* ========== STRAVA-INSPIRED STYLING ========== */
+
 :root {
-    --bg: #0e0f16;
-    --panel: #1b1d29;
-    --input: #222433;
-    --border: #2c2f44;
-    --accent: #5b9cff;
-    --text: #e9ecf3;
-    --user: #0044ff33;
-    --assistant: #44445533;
-    --radius: 12px;
+    --strava-orange: #fc4c02;
+    --strava-dark: #2d2d2d;
+    --strava-light: #f7f7f7;
+    --strava-gray: #e5e5e5;
+    --radius: 10px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* ---- APP LAYOUT (page never scrolls) ---- */
-html, body { height: 100%; }
-body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+/* Reset defaults */
+body, h1, h2, h3, p, ul {
     margin: 0;
     padding: 0;
-    /* Full-height 3-row grid: header | main | input */
-    height: 100dvh;                      /* better on mobile than 100vh */
-    display: grid;
-    grid-template-rows: 4em 1fr auto;    /* header 4em, chat fills, input auto */
-    overflow: hidden;                    /* page itself never scrolls */
 }
 
-header {
-    text-align: center;
-    padding: 1.5rem 1rem;
-    border-bottom: 1px solid var(--border);
+body {
+    background-color: var(--strava-light);
+    color: var(--strava-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* If you also have a footer somewhere else */
-footer {
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.85rem;
-    color: var(--text);
-    border-top: 1px solid var(--border);
+/* ========== NAVBAR ========== */
+.navbar {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
 }
 
-a {
-    color: var(--accent);
+.navbar-brand {
+    color: var(--strava-orange);
+    font-weight: 700;
+    font-size: 1.5rem;
     text-decoration: none;
+    letter-spacing: 1px;
 }
 
+/* ========== CHAT AREA ========== */
 main {
-    min-height: 0;
+    flex: 1;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Outer chat card */
-.chat-window,
 .chat-container {
-    flex: 1;
-    min-height: 0;
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin: 2rem;
     display: flex;
     flex-direction: column;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
 }
 
-/* The ONLY scrollable area */
 .chat-messages {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1.2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    scroll-behavior: smooth;
+    gap: 1rem;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
 }
 
-/* Optional: pretty scrollbars */
-.chat-messages::-webkit-scrollbar { width: 8px; }
-.chat-messages::-webkit-scrollbar-thumb { background: #2b3150; border-radius: 8px; }
-.chat-messages::-webkit-scrollbar-thumb:hover { background: #3a4270; }
-.chat-messages { scrollbar-width: thin; scrollbar-color: #2b3150 transparent; }
-
-/* ---- MESSAGES ---- */
-.message { display: flex; }
-.message.user { justify-content: flex-end; }
-
-.message .bubble {
-    padding: 0.8rem 1rem;
-    border-radius: var(--radius);
-    max-width: 75%;
-    white-space: pre-wrap;
-    word-break: break-word;
-    line-height: 1.5;
-    border: 1px solid var(--border);
-}
-
-.message.user .bubble {
-    background: var(--user);
-    color: var(--text);
+/* ========== MESSAGE BUBBLES ========== */
+.message {
+    display: flex;
 }
 
 .message.assistant .bubble {
-    background: var(--assistant);
+    background-color: var(--strava-orange);
+    color: white;
+    align-self: flex-start;
 }
 
-/* ---- INPUT BAR (footer row) ---- */
+.message.user .bubble {
+    background-color: var(--strava-gray);
+    color: var(--strava-dark);
+    align-self: flex-end;
+}
+
+.bubble {
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+/* ========== INPUT AREA ========== */
 .chat-input {
     display: flex;
-    align-items: flex-end;
-    gap: 0.6rem;
-    padding: 1rem;
-    background: var(--input);
-    border-top: 1px solid var(--border);
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 0.5rem 1rem;
 }
 
 .chat-input textarea {
     flex: 1;
     resize: none;
-    max-height: 160px;
-    min-height: 44px;
-    background: var(--input);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 0.8rem;
-    font-size: 0.95rem;
+    border: none;
     outline: none;
-    transition: border-color 0.2s;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    color: var(--strava-dark);
 }
 
-.chat-input textarea:focus { border-color: var(--accent); }
-
 .chat-input button {
-    background: var(--accent);
+    background-color: var(--strava-orange);
     border: none;
     color: white;
-    padding: 0.6rem 0.8rem;
-    border-radius: var(--radius);
-    cursor: pointer;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.chat-input button:hover { background: #3f82f6; }
+.chat-input button:hover {
+    background-color: #e04302;
+    transform: scale(1.05);
+}
+
+/* ========== SCROLLBAR ========== */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: var(--strava-orange);
+    border-radius: 10px;
+}
+.chat-messages::-webkit-scrollbar-track {
+    background: var(--strava-light);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 600px) {
+    .chat-container {
+        margin: 1rem;
+        padding: 0.8rem;
+    }
+
+    .chat-input {
+        margin: 0 1rem 1rem 1rem;
+    }
+
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+}
