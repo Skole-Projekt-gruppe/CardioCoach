@@ -16,8 +16,8 @@ public class StravaController {
         this.stravaService = stravaService;
     }
 
-    @GetMapping("/activites")
-    public Mono<String> getActivites() {
-        return stravaService.getActivites();
+    @GetMapping("/activities")
+    public Mono<String> getActivities() {
+        return stravaService.getActivities();
     }
 }

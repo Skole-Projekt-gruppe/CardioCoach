@@ -13,7 +13,7 @@ public class StravaService {
         this.stravaClient = stravaClient;
     }
 
-    public Mono<String> getActivites() {
-        return stravaClient.getActivites();
+    public Mono<String> getActivities() {
+        return stravaClient.getActivities();
     }
 }

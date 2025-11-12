@@ -57,7 +57,7 @@ public class StravaClient {
                 );
     }
 
-    public Mono<String> getActivites() {
+    public Mono<String> getActivities() {
         return stravaWebClient.get()
                 .uri("/athlete/activities?per_page=30&page=1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
