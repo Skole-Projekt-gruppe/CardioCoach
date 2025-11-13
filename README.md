@@ -1,5 +1,4 @@
-# CardioCoach
-## Powered By Strava
+# CardioCoach - Powered By Strava
 
 CardioCoach is an application that combines your Strava data with ChatGPT’s intelligence. It allows you to fetch your workout data via the Strava API and interact with ChatGPT directly to gain insights, analyses, and personalized advice based on your activity.
 
