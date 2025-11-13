@@ -10,8 +10,3 @@ CardioCoach is an application that combines your Strava data with OpenAI's intel
 - **Data-Driven Coaching** – Receive suggestions for improvement and training goals.  
 
 ---
-
-## Getting Started
-
-
-### Installation
