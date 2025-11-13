@@ -1,0 +1,73 @@
+/* Layout: chat venstre, aktiviteter højre */
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 700px) 360px; /* chat | sidebar */
+    gap: 3rem;                     /* MERE LUFT IMELLEM DEM */
+    max-width: 1400px;             /* bredere område */
+    margin: 2rem auto;             /* lidt afstand fra top */
+    align-items: flex-start;       /* begge starter oppe ved toppen */
+}
+
+.chat-column {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;          /* afstand mellem chat-boks og input-felt */
+}
+
+/* Sidebar */
+.activities-panel {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    max-height: calc(100vh - 140px);
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,.04);
+}
+
+.activities-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.activities-header h2 { font-size: 1rem; margin: 0; }
+
+.activities-header button {
+    border: none;
+    background: #ef6c00;
+    color: #fff;
+    border-radius: 10px;
+    padding: .35rem .6rem;
+    cursor: pointer;
+}
+
+.activities-list { overflow: auto; padding: .25rem .5rem .5rem; }
+
+.activity {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: .6rem;
+    padding: .6rem .5rem;
+    border-bottom: 1px dashed #eee;
+}
+.activity:last-child { border-bottom: none; }
+
+.activity .dot {
+    width: 9px; height: 9px; border-radius: 50%; background: #ef6c00; margin-top: .35rem;
+}
+.activity .title { font-weight: 600; margin: 0 0 .15rem; line-height: 1.2; }
+.activity .meta { font-size: .84rem; color: #666; }
+
+.activities-footer { padding: .5rem 1rem .75rem; border-top: 1px solid #f1f1f1; color: #777; font-size: .82rem; }
+
+/* Mobil: stack */
+@media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .activities-panel { order: -1; }
+}

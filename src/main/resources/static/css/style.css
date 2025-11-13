@@ -44,13 +44,14 @@ body {
     letter-spacing: 1px;
 }
 
-/* ========== CHAT AREA ========== */
+/* ========== CHAT AREA ==========
 main {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+*/
 
 .chat-container {
     width: 100%;
@@ -104,7 +105,7 @@ main {
     align-items: center;
     justify-content: center;
     max-width: 700px;
-    margin: 0 auto 2rem auto;
+    margin: 0;                 /* <-- vigtig: ikke 0 auto længere */
     background: #fff;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
