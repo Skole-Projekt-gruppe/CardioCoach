@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/stravaside.css">
     <title>CardioCoach</title>
 </head>
 <body>
@@ -13,28 +14,54 @@
     </nav>
 </header>
 
-<main>
-    <div class="chat-container">
-        <div id="chat" class="chat-messages">
-            <div class="message assistant">
-                <div class="bubble">Hello! Ask me anything.</div>
+<!-- Layout-wrapper der holder på både chatten (venstre) og aktiviteter (højre) -->
+<main class="layout">
+    <!-- VENSTRE: CHAT-KOLONNE (chat + input) -->
+    <section class="chat-column">
+        <!-- Chat-boksen -->
+        <div class="chat-container">
+            <div id="chat" class="chat-messages">
+                <div class="message assistant">
+                    <div class="bubble">Hello! Ask me anything.</div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- Chat-input hører også til venstre kolonne -->
+        <form id="chat-form" class="chat-input" autocomplete="off">
+            <textarea id="prompt" name="prompt" placeholder="Send a message..." required></textarea>
+            <button type="submit" title="Send">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </polygon>
+            </button>
+        </form>
+    </section>
+
+    <!-- HØJRE: STRAVA-SIDEBAR -->
+    <aside class="activities-panel">
+        <header class="activities-header">
+            <h2>Strava – Last 30</h2>
+            <button id="refresh-activities" title="Refresh" aria-label="Refresh">↻</button>
+        </header>
+
+        <div id="activities" class="activities-list" aria-live="polite">
+            <!-- Aktiviteter renderes her fra JS -->
+        </div>
+
+        <footer class="activities-footer">
+            <small id="activities-status">Loading…</small>
+        </footer>
+    </aside>
 </main>
 
-<div>
-    <form id="chat-form" class="chat-input" autocomplete="off">
-        <textarea id="prompt" name="prompt" placeholder="Send a message..." required></textarea>
-        <button type="submit" title="Send">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"/>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
-        </button>
-    </form>
-</div>
-
 <script type="module" src="./js/app.js"></script>
+
+<script>
+    // no-op; al logik ligger i js/app.js som beskrevet
+</script>
 </body>
 </html>
