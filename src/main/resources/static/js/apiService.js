@@ -15,11 +15,12 @@ export async function askAI(prompt) {
 }
 
 export async function getActivities() {
-    const response = await fetch(BASE_URL + "/strava/activites", {
+    const response = await fetch(BASE_URL + "/strava/activities", {
             headers: {
                 "Content-Type": "application/json",
             }
         }
     );
-    return await response.json();
+    const data = await response.json();
+    return data;
 }

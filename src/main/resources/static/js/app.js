@@ -3,9 +3,10 @@ import {getActivities} from "./apiService.js";
 
 window.addEventListener("DOMContentLoaded", initApp);
 
-function initApp() {
+async function initApp() {
     console.log("App initialized");
     setupEventlisteners();
+    await showActivites();
 }
 
 function setupEventlisteners() {
@@ -14,61 +15,43 @@ function setupEventlisteners() {
     const form = document.getElementById('chat-form');
     const textarea = form.querySelector('textarea');
     textarea.addEventListener("keydown", handleKeyDown);
+    const refreshBtn = document.getElementById('refresh-activities');
+    refreshBtn.addEventListener("click",showActivites);
+    refreshBtn.addEventListener("click", () => console.log("clicked"));
 }
 
-// === Strava Activities Sidebar ===
-const ACT_URL = "/api/strava/activities?per_page=30"; // backend-proxy
-const $list = document.getElementById("activities");
-const $status = document.getElementById("activities-status");
-const $refresh = document.getElementById("refresh-activities");
+async function showActivites() {
+    const aktiviteter = document.getElementById('aktiviteter');
+    const activities = await getActivities();
 
-const metersToKm = m => (m ?? 0) / 1000;
-const secondsToHMM = s => {
-    if (!s && s !== 0) return "-";
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    return h ? `${h}h ${m}m` : `${m}m`;
-};
-const escapeHtml = str => String(str).replace(/[&<>"']/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[s]));
+    aktiviteter.innerHTML = " ";
 
-async function fetchActivities() {
-    if (!$list) return;
-    $status.textContent = "Loading…";
-    try {
-        const res = await fetch(ACT_URL, { headers: { "Accept": "application/json" } });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const items = await res.json();
-        renderActivities(Array.isArray(items) ? items : []);
-        $status.textContent = `Updated ${new Date().toLocaleTimeString()}`;
-    } catch (e) {
-        console.error(e);
-        $status.textContent = "Could not load activities.";
-    }
+    activities.forEach(a => {
+        const li = document.createElement('li');
+
+        li.innerHTML =
+            "<strong>name:</strong> " + a.name + "<br>" +
+            "<strong>id:</strong> " + a.id + "<br>" +
+            "<strong>start_date_local:</strong> " + a.start_date_local + "<br>" +
+            "<strong>distance:</strong> " + a.distance + " m<br>" +
+            "<strong>moving_time:</strong> " + a.moving_time + " s<br>" +
+            "<strong>elapsed_time:</strong> " + a.elapsed_time + " s<br>" +
+            "<strong>total_elevation_gain:</strong> " + a.total_elevation_gain + " m<br>" +
+            "<strong>type:</strong> " + a.type + "<br>" +
+            "<strong>average_speed:</strong> " + a.average_speed + " m/s<br>" +
+            "<strong>max_speed:</strong> " + a.max_speed + " m/s<br>" +
+            "<strong>average_cadence:</strong> " + a.average_cadence + " rpm<br>" +
+            "<strong>average_watts:</strong> " + a.average_watts + " W<br>" +
+            "<strong>max_watts:</strong> " + a.max_watts + " W<br>" +
+            "<strong>weighted_average_watts:</strong> " + a.weighted_average_watts + " W<br>" +
+            "<strong>kilojoules:</strong> " + a.kilojoules + " kJ<br>" +
+            "<strong>has_heartrate:</strong> " + a.has_heartrate + "<br>" +
+            "<strong>average_heartrate:</strong> " + a.average_heartrate + " bpm<br>" +
+            "<strong>max_heartrate:</strong> " + a.max_heartrate + " bpm<br>" +
+            "<strong>elev_high:</strong> " + a.elev_high + " m<br>" +
+            "<strong>elev_low:</strong> " + a.elev_low + " m";
+
+        aktiviteter.appendChild(li);
+    });
 }
 
-function renderActivities(items) {
-    if (!items.length) {
-        $list.innerHTML = `<div class="activity"><div class="dot"></div><div>
-      <p class="title">No recent activities</p>
-      <p class="meta">Try refreshing in a bit.</p></div></div>`;
-        return;
-    }
-    $list.innerHTML = items.slice(0,30).map(a => {
-        const name = a.name ?? (a.sport_type || "Activity");
-        const dist = metersToKm(a.distance).toFixed(1) + " km";
-        const dur = secondsToHMM(a.moving_time);
-        const when = a.start_date ? new Date(a.start_date).toLocaleDateString() : "";
-        const sport = a.sport_type ?? "";
-        return `<div class="activity" data-id="${a.id}">
-      <div class="dot"></div>
-      <div>
-        <p class="title">${escapeHtml(name)}</p>
-        <p class="meta">${sport} • ${dist} • ${dur} • ${when}</p>
-      </div>
-    </div>`;
-    }).join("");
-}
-
-document.addEventListener("DOMContentLoaded", fetchActivities);
-$refresh?.addEventListener("click", fetchActivities);
-setInterval(fetchActivities, 5 * 60 * 1000);

@@ -63,7 +63,7 @@ public class StravaClient {
 
     public Mono<List<CyclingActivity>> getActivities() {
         return stravaWebClient.get()
-                .uri("/athlete/activities?per_page=1&page=1")
+                .uri("/athlete/activities?per_page=30&page=1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<CyclingActivity>>() {})
