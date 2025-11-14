@@ -4,7 +4,7 @@ CardioCoach is an application that combines your Strava data with OpenAI's intel
 
 ## 🚀 Features
 
-- Strava API Integration – Fetch your running, cycling, and other activity data.
+- Strava API Integration – Fetch your cycling ~~, running, and other activity~~ data.
 - Chat with CardioCoach – Ask questions about your workouts and get instant answers.
 - Personalized Insights – Analyze pace, heart rate, distance, and trends over time.
 - Data-Driven Coaching – Receive suggestions for improvement and training goals.
