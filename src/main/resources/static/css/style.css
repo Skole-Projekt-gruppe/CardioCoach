@@ -96,6 +96,7 @@ main {
     box-shadow: var(--shadow);
     max-width: 80%;
     word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 /* ========== INPUT AREA ========== */
