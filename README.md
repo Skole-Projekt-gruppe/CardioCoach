@@ -41,9 +41,10 @@ http://www.strava.com/oauth/authorize?client_id=YOUR_CLIENT_ID&response_type=cod
 http://localhost/exchange_token?state=&code=YOUR_CODE&scope=read,activity:read_all,profile:read_all,read_all
 ```
 4. Copy the YOUR_CODE from the URL.
-5. Exchange the code for an access token and refresh token using the Strava API.
-   It should look something like this in Postman:
-   <img width="1217" height="367" alt="image" src="https://github.com/user-attachments/assets/4464688d-8018-4a59-90d9-a46d13967e4d" />
+5. Exchange the code for an access token and refresh token using Postman.
+```
+https://www.strava.com/oauth/token?client_id=&client_secret=&code=&grant_type=
+```
 6. Store your Strava credentials in your `.env` file:
 
 
