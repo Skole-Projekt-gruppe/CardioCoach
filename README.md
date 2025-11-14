@@ -45,7 +45,11 @@ http://localhost/exchange_token?state=&code=YOUR_CODE&scope=read,activity:read_a
 ```
 https://www.strava.com/oauth/token?client_id=&client_secret=&code=&grant_type=
 ```
-6. Store your Strava credentials in your `.env` file:
+6. Store your Strava credentials in your `.env` file.
 
+### ChatGPT
+
+1. Create a key on [OpenAI API Platform](https://platform.openai.com/api-keys)
+2. Store the credential in your `.env` file.
 
 Now your CardioCoach app is ready to fetch Strava data and interact with ChatGPT!
