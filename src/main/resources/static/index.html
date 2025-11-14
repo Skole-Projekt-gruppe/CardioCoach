@@ -22,7 +22,7 @@
         <div class="chat-container">
             <div id="chat" class="chat-messages">
                 <div class="message assistant">
-                    <div class="bubble">Hello! Ask me anything.</div>
+                    <div class="bubble">Hello! Ask me anything about your recent activities.</div>
                 </div>
             </div>
         </div>
@@ -44,17 +44,13 @@
     <!-- HØJRE: STRAVA-SIDEBAR -->
     <aside class="activities-panel">
         <header class="activities-header">
-            <h2>Strava – Last 30</h2>
+            <h2>Strava – Last 30 Activities</h2>
             <button id="refresh-activities" title="Refresh" aria-label="Refresh">↻</button>
         </header>
 
         <div id="activities" class="activities-list" aria-live="polite">
-            <!-- Aktiviteter renderes her fra JS -->
+            <ol id="aktiviteter"></ol>
         </div>
-
-        <footer class="activities-footer">
-            <small id="activities-status">Loading…</small>
-        </footer>
     </aside>
 </main>
 
