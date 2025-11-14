@@ -13,38 +13,38 @@ CardioCoach is an application that combines your Strava data with OpenAI's intel
 
 ## Get Started
 
-### ChatGPT
-
-Set up your OpenAI API key and endpoint in a `.env` file:
-
-chatgpt.api.key=YOUR_OPENAI_API_KEY
+### .env Template
+```dotenv
+chatgpt.api.key=
 chatgpt.api.baseUrl=https://api.openai.com/v1
+
+# Strava webClient
+strava.api.baseUrl=https://www.strava.com/api/v3
+strava.api.authUrl=https://www.strava.com
+
+# Strava ENV
+strava.access-token=
+strava.refresh-token=
+strava.client-id=
+strava.client-secret=
+```
 
 ### Strava
 
 1. Create an API application on [Strava API settings](https://www.strava.com/settings/api).
 2. Authorize your app by opening this URL (replace YOUR_CLIENT_ID with your client ID):
-
+```
 http://www.strava.com/oauth/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=read_all,activity:read_all,profile:read_all
-
+```
 3. Click Authorize. You will be redirected to a URL like:
-
+```
 http://localhost/exchange_token?state=&code=YOUR_CODE&scope=read,activity:read_all,profile:read_all,read_all
-
-4. Copy the code from the URL.
+```
+4. Copy the YOUR_CODE from the URL.
 5. Exchange the code for an access token and refresh token using the Strava API.
+   It should look something like this in Postman:
+   <img width="1217" height="367" alt="image" src="https://github.com/user-attachments/assets/4464688d-8018-4a59-90d9-a46d13967e4d" />
 6. Store your Strava credentials in your `.env` file:
 
-# Strava API
-strava.api.baseUrl=https://www.strava.com/api/v3
-strava.api.authUrl=https://www.strava.com
-
-# Strava credentials
-strava.access-token=YOUR_ACCESS_TOKEN
-strava.refresh-token=YOUR_REFRESH_TOKEN
-strava.client-id=YOUR_CLIENT_ID
-strava.client-secret=YOUR_CLIENT_SECRET
-
----
 
 Now your CardioCoach app is ready to fetch Strava data and interact with ChatGPT!
