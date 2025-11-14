@@ -1,7 +1,9 @@
 package ek.alss.cardiocoach.client;
 
+import ek.alss.cardiocoach.models.CyclingActivity;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -9,6 +11,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Service
 public class StravaClient {
@@ -57,19 +61,19 @@ public class StravaClient {
                 );
     }
 
-    public Mono<String> getActivities() {
+    public Mono<List<CyclingActivity>> getActivities() {
         return stravaWebClient.get()
-                .uri("/athlete/activities?per_page=30&page=1")
+                .uri("/athlete/activities?per_page=1&page=1")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(new ParameterizedTypeReference<List<CyclingActivity>>() {})
                 .onErrorResume(WebClientResponseException.Unauthorized.class, e -> {
                     return refreshToken().flatMap(token -> {
                         return stravaWebClient.get()
                                 .uri("/athlete/activities?per_page=30&page=1")
                                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                                 .retrieve()
-                                .bodyToMono(String.class);
+                                .bodyToMono(new ParameterizedTypeReference<List<CyclingActivity>>() {});
                     });
                 });
     }
