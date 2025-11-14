@@ -80,7 +80,7 @@ async function showActivites() {
             "<strong>average_heartrate:</strong> " + a.average_heartrate + " bpm<br>" +
             "<strong>max_heartrate:</strong> " + a.max_heartrate + " bpm<br>" +
             "<strong>elev_high:</strong> " + a.elev_high + " m<br>" +
-            "<strong>elev_low:</strong> " + a.elev_low + " m";
+            "<strong>elev_low:</strong> " + a.elev_low + " m<br><br>";
 
         aktiviteter.appendChild(li);
     });
