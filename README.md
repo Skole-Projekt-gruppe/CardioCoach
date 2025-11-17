@@ -13,6 +13,11 @@ CardioCoach is an application that combines your Strava data with OpenAI's intel
 
 ## Get Started
 
+### Clone the project
+```
+https://github.com/Skole-Projekt-gruppe/CardioCoach.git
+```
+
 ### .env Template
 ```dotenv
 chatgpt.api.key=
